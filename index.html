@@ -1,0 +1,1081 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <!--[if gte IE 9]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]--> 
+    <!--[if lt IE 9]><meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" /><![endif]--> 
+<meta charset="utf-8" />
+    <title>JavaScript: You don't need a framework for that</title>    
+<link rel="stylesheet" href="fluentconf.css"/>
+<style>
+@media screen and (-webkit-min-device-pixel-ratio:0){
+.textmask, h1{
+
+    background: 
+        -webkit-linear-gradient(left, rgba(0,0,0,0.2) 50%, transparent 50%),
+        -webkit-linear-gradient(left, transparent 40%, rgba(0,0,0,0.2) 40%),
+        -webkit-linear-gradient(left, transparent 60%, rgba(0,0,0,0.2) 60%),
+        -webkit-linear-gradient(left, transparent 50%, rgba(0,0,0,0.2) 50%),
+        -webkit-linear-gradient(left, transparent 40%, rgba(0,0,0,0.2) 40%),
+        -webkit-linear-gradient(left, transparent 60%, rgba(0,0,0,0.2) 60%),
+        -webkit-linear-gradient(left,
+        red 14%, orange 15%, orange 28%, yellow 29%, yellow 42%, green 43%, green 56%, blue 57%, blue 70%, magenta 71%, magenta 85%, purple 86%), white;
+    -webkit-background-size: 1px 50%, 1px 50px, 32px, 120px, 80px, 70px, 500px;
+    
+-webkit-background-clip: text,text,text,text,text,text,text,text, border;
+color: rgba(0,0,0,0);
+    }
+	
+.invert h1{
+
+    background: 
+        -webkit-linear-gradient(left, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 50%),
+        -webkit-linear-gradient(left, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 40%),
+        -webkit-linear-gradient(left, rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 60%),
+        -webkit-linear-gradient(left, rgba(255,255,255,0) 50%, rgba(255,255,255,0.2) 50%),
+        -webkit-linear-gradient(left, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 40%),
+        -webkit-linear-gradient(left, rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 60%),
+        -webkit-linear-gradient(left,
+        red 14%, orange 15%, orange 28%, yellow 29%, yellow 42%, green 43%, green 56%, blue 57%, blue 70%, magenta 71%, magenta 85%, purple 86%), white;
+    -webkit-background-size: 1px 50%, 1px 50px, 32px, 120px, 80px, 70px, 500px;
+    
+-webkit-background-clip: text,text,text,text,text,text,text,text, border;
+color: rgba(0,0,0,0);
+    }
+
+.normal h1.textmask {
+	font-size: 200%;	
+}
+}
+td, th {padding: 3px 5px;}
+thead tr {
+  background-color: #999; 
+  color: #fff;
+}
+tbody tr:nth-of-type(odd) {
+  background-color: #fff;
+}
+tbody tr:nth-of-type(even) {
+  background-color: #ccc;
+}
+.shrink section * {
+	font-size: 0.9rem;	
+}
+.slide nav * {margin: 0; padding: 0; background-color: black;}
+nav ul li {
+  list-style-type: none;
+}
+nav > ul > li {
+  display: inline-block; 
+  position:relative;
+  border: none;
+}
+nav ul ul {
+  transform: scale(1,0); 
+  transform-origin: top center; 
+  transition:0.2s linear 50ms; 
+  position:absolute; 
+  top: 100%;
+}
+nav li:hover ul {
+  transform: scale(1,1);
+}
+.slide nav ul, .slide nav li  {margin: 0; padding: 0;}
+.slide nav ul li {list-style-type: none; background-color: #000000; color: white; margin:0; padding: 3px 5px; 
+}
+.slide nav ul ul li {border: 1px solid #fff;}
+nav > ul > li {display: inline-block; position:relative;}
+nav ul ul {
+	
+	-webkit-transform: scale(1,0);
+	-moz-transform: scale(1,0);
+	-ms-transform: scale(1,0);
+	-o-transform: scale(1,0);
+	transform: scale(1,0);
+	
+	 -webkit-transform-origin: top center; 
+	 -moz-transform-origin: top center; 
+	 -msitransform-origin: top center; 
+	 -o-transform-origin: top center; 
+	 transform-origin: top center; 
+	 
+	 -webkit-transition:0.2s linear 50ms;
+	 -moz-transition:0.2s linear 50ms;
+	 -ms-transition:0.2s linear 50ms;
+	 -o-transition:0.2s linear 50ms;
+	 transition:0.2s linear 50ms; 
+	 
+	 position:absolute; top: 100%; left:0;
+	 }
+nav li:hover ul {
+	-webkit-transform: scale(1,1);
+	-moz-transform: scale(1,1);
+	-ms-transform: scale(1,1);
+	-o-transform: scale(1,1);
+	transform: scale(1,1);
+	}
+.half {opacity: 0.2;}
+.white {text-align: left; color: #fff; text-shadow: 2px 2px  4px #000, -2px -2px  4px #000;}
+</style>
+</head> 
+
+<body> 
+<header>
+    <nav>
+        <ul>
+            <li class="button cancel" id="back">Back</li>
+            <li class="button done" id="next">Next</li>
+        </ul>
+    </nav>
+</header>
+<!-- Top instructions -->
+<div id="topinfo"></div>
+<!-- footer instructions -->  
+<div id="info">
+    <p><a href="http://standardista.com">Estelle Weyl</a> | <a href="http://twitter.com/estellevw">@estellevw</a> | <a href="http://github.com/estelle">Github</a> | Press <span class="key">&rarr;</span> to advance, <span class="key">2</span> for comments, <span class="key">4</span> to read/write notes.</p></div>
+
+  <div id="presentation">
+   <div id="presentation-counter"></div>
+   <div id="slides">
+   
+    <div class="slide intro">
+     <header><hgroup> 
+      <h1>You don't need <br>a <span class="textmask">framework</span><br> for that</h1> 
+     </hgroup></header><p>http://estelle.github.com/fluentconf/</p>
+    </div> 
+    
+    <div class="slide normal"> 
+<header><h1>Me</h1></header> 
+<section class="content"> 
+<h1 class="textmask">Estelle Weyl</h1>
+<h2><a href="http://www.standardista.com">www.standardista.com</a></h2>
+<h2><a href="http://www.twitter.com/estellevw">@estellevw</a></h2>
+<h2><a href="http://www.twitter.com/standardista">@standardista</a></h2>
+<div style="float:right"><img src="http://akamaicovers.oreilly.com/images/9780980846904/cat.gif" alt="HTML5 and CSS3 for the Real World"><img src="http://akamaicovers.oreilly.com/images/0636920018063/cat.gif" alt="HTML5: The Definitive Guide" style="margin: 0 20px;"/><img src="http://akamaicovers.oreilly.com/images/0636920021711/cat.gif" alt="MObile HTML5" style="margin: 0 20px;"/><img src="http://akamaicovers.oreilly.com/images/0636920025955/cat.gif" alt="Web Performance Daybook"/><p class="temphidden">All statements are those of my employer, and not necessarily those of the speaker</div>
+</section>
+</div> 
+ 
+  
+<div class="slide normal object"> 
+<header><h1>My First Framework</h1></header> 
+<object data="http://estelleweyl.com/portfolio/dhtml.htm"></object>
+<a href="http://estelleweyl.com/portfolio/dhtml.htm" class="objectlink">My old portfolio</a>
+</div> 
+ 
+  
+<div class="slide normal"> 
+<header><h1>The code</h1></header>
+<pre contenteditable style="overflow: scroll; height:600px; font-size:0.8rem">var isDHTML, isID, isAll, isLayers;
+
+if (document.getElementById) {
+  isID = 1; isDHTML = 1;
+} else {
+  if (document.all) {
+    isAll = 1; isDHTML = 1;
+  } else {
+    browserVersion = parseInt(navigator.appVersion);
+    if ((navigator.appName.indexOf('Netscape') != -1) && (browserVersion == 4)) {
+      isLayers = 1; isDHTML = 1;
+    }
+   }
+}
+
+function findDOM(objectID,withStyle) {
+ if (withStyle == 1) {
+   if (isID) { return (document.getElementById(objectID).style) ; }
+   else { 
+     if (isAll) { return (document.all[objectID].style); }
+     else {
+        if (isLayers) { return (document.layers[objectID]); }
+     };
+   }
+ } else {
+    if (isID) { return (document.getElementById(objectID)); 
+    } else { 
+       if (isAll) { 
+          return (document.all[objectID]); 
+       } else {
+            if (isLayers) { return (document.layers[objectID]); }
+       };
+    }
+  }
+}
+
+function setClass(objectID,newClass) {
+    var dom =findDOM(objectID, 0);
+    dom.className = newClass;
+}</pre>
+</div> 
+ 
+<div class="slide normal"> 
+     <header><h1>Why frameworks?</h1></header> 
+     <section class="content"> 
+     <p style="margin:0">Normalize browser features / code once, works everywhere</p>
+     <pre contenteditable style="font-size: 0.9em;">
+if (el.<strong>addEventListener</strong>) { <span class="half">// W3C</span>
+  el.addEventListener("click", 
+     func, false);
+} <span class="half">// IE5+, Opera</span>
+else if (el.<strong>attachEvent</strong>) {
+  el.attachEvent ("click", func);
+} 
+else { <span class="half">// Netscape 4, IE5Mac</span>
+  el.<strong>on</strong>click = func;
+} </pre>
+
+<p class="pop">addEventListener supported in IE9 &amp; Opera 7</p>
+     </section>
+ </div>
+
+ 
+  
+<div class="slide normal"> 
+<header><h1 class="textmask">Frameworks</h1></header> 
+<section class="content"> 
+ 
+<ul class="col2">
+	<li>YUI</li>
+	<li>jQuery</li>
+	<li>Dojo</li>
+	<li>MooTools</li>
+	<li>Prototype</li>
+	<li>Script.aculo.us</li>
+	<li>Ext JS</li>
+	<li>Google Toolkit</li>
+	<li>SproutCore</li>
+	<li>Backbone</li>
+	<li>QooxDoo</li>
+	<li>Spry</li>
+    <li>Cappuccino</li>
+    <li>Glow</li>
+    <li>MochiKit</li>
+    <li>Rialto</li>
+    <li>Rico</li>
+    <li>UIZE</li>
+</ul>
+</section>
+</div> 
+ 
+<div class="slide normal"> 
+<header><h1 class="textmask"> Mobile Frameworks</h1></header> 
+<section class="content"> 
+<ul class="col2">
+	<li>Sencha Touch</li>
+	<li>jQuery Mobile</li>
+	<li>Jo</li>
+	<li>DHTMLX Touch / DynamicX</li>
+	<li>Zeptos</li>
+    <li>The M Project</li>
+    <li>XUI</li>
+    <li>Embed</li>
+    <li>Mobilize</li>
+    <li>ChocolateChip Mobile</li>
+    <li>jQTouch</li>
+    <li>iUI / iUIPad</li>
+    <li>Wink Toolkit</li>
+    <li>iWebKit</li>
+    <li>LawnChair</li>
+    <li>Titanium</li>
+    <li>PhoneGap</li>
+</ul>
+</section>
+</div> 
+ 
+<div class="slide object"> 
+     <object data="http://html9responsiveboilerstrapjs.com/"></object>
+     <a href="http://html9responsiveboilerstrapjs.com/" class="objectlink">HTML9 Responsive Boilerstrap JS</a>
+ </div>
+ 
+<div class="slide object"> 
+     <object data="html9/index.html"></object>
+     <a href="http://html9responsiveboilerstrapjs.com/">HTML9 Responsive Boilerstrap JS</a>
+</div>
+ 
+ 
+ 
+<div class="slide intro"> 
+<header><h1>Frameworks <br>ARE Good</h1></header> 
+</div> 
+ 
+  
+<div class="slide intro" style="background-color: #fff"> 
+<header><h1>Don't Reinvent The Wheel</h1>
+<img src="images/wheel.png" alt="Don't reinvent the wheel"/></header> 
+</div> 
+ 
+  
+<div class="slide intro invert" style="background-color: #000"> 
+<header><h1>4,218 brains are better than 1</h1></header> 
+<section class="content" style="background: url(images/brain.jpg) no-repeat bottom center; min-height: 450px">
+<p class="temphidden white">Faster, optimized, readable code</p>
+<p class="temphidden white">Function chaining &amp; implicit iteration behavior</p>
+<p class="temphidden white">Less code. Faster to code.</p>
+<p class="temphidden white">Faster learning curve. No need to know JS?!?!</p>
+
+<footer style="color:#666">Photo: <a href="http://www.thesimpsons.com/" style="color: #fff;">The Simpsons</a></footer>
+</section>
+</div> 
+ 
+<!--  
+<div class="slide normal"> 
+<header><h1 class="textmask">Can be useful</h1></header> 
+<section class="content"> 
+<ul>
+	<li>Don't reinvent the wheel</li>
+	<li>Code written by pros</li>
+	<li>Faster, Optimized code</li>
+	<li>Code Faster</li>
+	<li>More readable code</li>
+    <li>Less code with function chaining</li>
+    <li>Implicit iterator behaviour</li>
+</ul>
+</section>
+</div> -->
+ 
+  
+<div class="slide intro"> 
+<header>
+<h1>Seriously?</h1></header> 
+<section>
+<pre>&lt;script src="jquery.js"&gt;&lt;/script>
+          
+&lt;script type="text/javascript">                                         
+   $('li:first').addClass('first');     
+&lt;/script>
+</pre>
+</section>
+</div> 
+ 
+<div class="slide object">
+<object data="http://jsfiddle.net/chriscoyier/WTAr9/"></object>
+</div> 
+
+<div class="slide object">
+<object data="http://jsfiddle.net/estelle/WTAr9/210/"></object>
+</div> 
+
+<div class="slide normal"> 
+<header><h1></h1></header> 
+<section class="content"> 
+<p>With jQuery</p>
+<pre contenteditable style="font-size: 0.7rem">$("a[href^='http']").each(function() {
+  $(this).css({
+    background-image: "url(http://g.etfv.co/" + this.href + ")"});
+});​</pre>
+<p>with Vanilla.js</p>
+<pre contenteditable style="font-size: 0.7rem">var links = 
+    document.querySelectorAll("a[href^='http']"), i;
+
+for (i=0; i&lt;links.length; i++){
+    links[i].style.backgroundImage = 
+      "url(http://g.etfv.co/" + links[i].getAttribute('href') +")";
+}​</pre>
+<p>jquery.min.js<br/>
+from: ajax.googleapis.com/ajax/libs/jquery/1.7.2<br/>
+96.2KB + HTTP request + 4J + DNS lookup</p>
+</section>
+</div> 
+
+
+
+<div class="slide normal" style="background-color: #fff">
+<header>
+	<h1>Mobile Matters</h1>
+</header>
+<section>
+<ul>
+	<li>Minimize Battery usage</li>
+    <li>Reduce Latency (fewer HTTP requests)</li>
+    <li>Manage limited memory</li>
+    <li>Ensure a responsive UI</li>
+</ul> 
+<img src="../mobile/images/latency.gif" alt="Latency"/>
+<a href="http://estelle.github.com/mobile/" style="float: right">Mobile Performance presentation</a>
+</section>
+ </div>  
+
+
+
+<div class="slide object"> 
+<object data="http://www2012.org/proceedings/proceedings/p41.pdf"></object>
+     <header><h1>Who Killed My Battery</h1></header> 
+     <a href="http://www2012.org/proceedings/proceedings/p41.pdf" class="objectlink">Download PDF</a>
+ </div>
+
+<div class="slide normal"> 
+     <header><h1>Don't be a SPOF</h1></header> 
+     <section class="content"> 
+     <h1>Single Point of Failure</h1>
+     
+     <p>Don't Add Frameworks in the 3rd party widgets you create!!</p>
+     
+     <p>"<a href="https://github.com/kentbrew/Case-Hardened-JavaScript/blob/master/stub.js">Eight Simple Rules for Running Your JavaScript on My Page</a>" by Kent Brewster</p>
+     </section>
+ </div>
+
+<div class="slide intro"> 
+<header><h1 class="textmask">Vanilla JS</h1></header> 
+<section class="content"> 
+	<pre contenteditable style="text-align:center">&lt;script>&lt;/script></pre>
+<p class="temphidden">If possible, make home pages work BEFORE the library needs to be downloaded. - SurveyMonkey</p>
+<p class="temphidden">While you many not support non-JavaScript users, your users are basically non-JS while they're downloading, parsing and executing your JS files</p>
+<p class="temphidden">Get and maintain mad JS skillz.</section>
+</div>   
+ 
+ 
+   
+<div class="slide intro"> 
+<header>
+<h1>Smackable!</h1></header> 
+<section>
+<pre>&lt;script src="jquery.js"&gt;&lt;/script>
+          
+&lt;script type="text/javascript">                                         
+   $('li:first').addClass('first');     
+&lt;/script>
+</pre>
+</section>
+</div> 
+
+
+<div class="slide normal"> 
+<header>
+	<h1>Natively...</h1>
+</header> 
+ 
+<section style="margin-left:0;">
+<p>Global Variables for presentation: </p>
+<pre contenteditable>var d = document, i, el, EBCN, QSA;</pre>
+<p>vanilla js</p>
+<pre contenteditable style="margin-right:-40px">
+d.querySelector('li').classList.add('first');
+</pre>
+<p>or simply</p>
+<pre>li:first-of-type {
+    /* <strong>.first</strong> declarations */
+}</pre>
+<p class="half temphidden">Hit 4 for taking notes</p>
+</section>
+</div> 
+
+  
+<div class="slide intro"> 
+<header>
+<h1><span style="float:left">JavaScript...</span>
+<br style="clear: both;"><br/> it's not always necessary</h1>
+</header> 
+</div> 
+
+    
+<div class="slide normal shrink"> 
+<header><h1>Zebra Tables</h1></header> 
+<section class="content"> 
+<pre class="temphidden" contenteditable>var tr = d.getElementsByTagName('tr');
+for(i=0; i &lt; tr.length; i+=2) {
+	tr[i].setAttribute('class','odd');
+}</pre>
+<pre contenteditable style="float:left">thead tr {
+  background-color: #999; 
+  color: #fff;
+}
+tbody tr<strong>:nth-of-type(odd)</strong> {
+  background-color: #fff;
+}
+tbody tr<strong>:nth-of-type(even)</strong> {
+  background-color: #ccc;
+}</pre>
+
+<table style="float: right" cellpadding="0" cellspacing="0" border="0">
+<thead><tr><th>First</th><th>Last</th><th>Twitter</th></tr></thead>
+<tbody>
+<tr><td>Estelle</td><td>Weyl</td><td>@estellevw</td></tr>
+<tr><td>Nicole</td><td>Sullivan</td><td>@stubbornella</td></tr>
+<tr><td>Amy</td><td>Hoy</td><td>@amyhoy</td></tr>
+<tr><td>Sarah</td><td>Mei</td><td>@sarahmei</td></tr>
+<tr><td>Rebecca</td><td>Murphey</td><td> @rmurphey</td></tr>
+<tr><td>Garann</td><td>Means</td><td>@garannm</td></tr>
+<tr><td>Tomomi</td><td>Imura</td><td>girlie_mac</td></tr>
+<tr><td>Pamela</td><td>Fox</td><td>@pamelafox</td></tr>
+<tr><td>Stacie</td><td>Hibino</td><td>@staciehibino</td></tr>
+<tr><td>Sharon</td><td>Minsuk</td><td>@sharonminsuk</td></tr>
+<tr><td>Sarah</td><td>Allen</td><td>@ultrasaurus</td></tr>
+<tr><td>Avni</td><td>Khatri</td><td>@avni321</td></tr>
+<tr><td>Shelley</td><td>Powers</td><td>@shelleypowers</td></tr>
+</tbody>
+</table>
+</section>
+</div> 
+ 
+<!-- Useful example -->
+<div class="slide normal"> 
+     <header><h1>Animating without JS</h1></header> 
+     <section class="content" style="min-height: 400px;">
+     
+<nav>
+	<ul>
+    	<li>About
+        <ul>
+            <li>Me</li>
+            <li>You</li>
+            <li>Them</li>
+            <li>Nobody</li>
+       </ul>
+        </li>
+        <li>Posts
+        <ul>
+            <li>Door Post</li>
+            <li>Wall hanging</li>
+            <li>Stair Banister</li>
+            <li>Washington</li>
+       </ul></li>
+        <li>Topics
+        <ul>
+            <li>CSS3</li>
+            <li>JavaScript</li>
+            <li>HTML5</li>
+            <li>SEO</li>
+       </ul></li>
+        <li>Events
+        <ul>
+            <li>Party</li>
+            <li>Dinner</li>
+            <li>Hike</li>
+            <li>Foo Camp</li>
+       </ul></li>
+   </ul>
+</nav>
+ <pre contenteditable>nav > ul > li {
+  display: inline-block; 
+  position:relative;
+}
+nav ul ul {
+  transform: <strong>scale(1,0)</strong>; 
+  transform-origin: top center; 
+  <strong>transition</strong>: 0.2s linear 50ms; 
+  position: absolute; top: 100%;
+}
+nav li<strong>:hover</strong> ul {
+  transform: <strong>scale(1,1)</strong>;
+}</pre>
+     </section>
+ </div>  
+
+
+<div class="slide normal" style="padding:0 20px;"> 
+     <section class="content" style="margin: 0;"> 
+<pre contenteditable style="font-size:0.8rem; position:relative;">nav > ul > li {
+  display: inline;
+  zoom: 1;
+  display: inline-block; 
+  position:relative;
+}
+nav ul ul {
+  -webkit-transform: scale(1,0); 
+  -moz-transform: scale(1,0); 
+  -ms-transform: scale(1,0); 
+  -o-transform: scale(1,0); 
+  transform: scale(1,0); 
+  -webkit-transform-origin: top center;
+  -moz-transform-origin: top center;
+  -ms-transform-origin: top center;
+  -o-transform-origin: top center;
+  transform-origin: top center; 
+  -webkit-transition: transform 0.2s linear 50ms; 
+  -moz-transition: transform 0.2s linear 50ms; 
+  -ms-transition: transform 0.2s linear 50ms; 
+  -o-transition: transform 0.2s linear 50ms; 
+  transition: transform 0.2s linear 50ms; 
+  position: absolute; top: 100%;
+  display: none;
+}
+</pre>
+<pre style="position: absolute; top:1px;right:21px;font-size:0.8rem; border:none; border-left: 1px solid #ccc; border-top-left-radius:0; border-bottom-left-radius:0;">nav li:hover ul {
+  -webkit-transform: scale(1,1);
+  -moz-transform: scale(1,1);
+  -ms-transform: scale(1,1);
+  -o-transform: scale(1,1);
+  transform: scale(1,1);
+  display: block;
+}</pre>
+
+     </section>
+     <header style="position:absolute; top:0; width: 100%;"><h1>Full Browser Support</h1></header>
+ </div>
+
+
+<div class="slide intro"> 
+     <header><h1 class="temphidden">CSS is Awesome...</h1><h1 class="temphidden">... and so is JavaScript</h1></header> 
+     <section></section> 
+</div>
+
+
+<div class="slide intro"> 
+     <header><h1 style="font-size: 2.75rem;">getElementsByClassName</h1></header>  
+     <section><p class="pop">Supported since IE9</p></section> 
+</div>
+
+ 
+<div class="slide normal"> 
+     <header><h1>getElementsByClassName</h1></header> 
+     <section class="content">
+     
+<p>on the document</p> 
+     <pre contenteditable>d.getElementsByClassName('foo');
+     </pre>
+
+<p>on a DOM node</p>     
+<pre contenteditable>el = document.getElementById('bar');
+el.getElementsByClassName('foo');
+</pre>
+<p>jQuery Equivalent</p>
+<pre contenteditable>el = $('.bar');</pre>
+ </section>
+ </div>
+ 
+ 
+<div class="slide normal"> 
+     <header><h1>Live NodeList</h1></header> 
+     <section class="content" style="margin-top: -20px;"> 
+<p class="half">Try the following code in the console</p>   
+<pre style="font-size:0.8rem" contenteditable>
+var container = document.getElementById('slides');
+var slides = container.getElementsByClassName('slide');
+console.log('1.' + slides.length);<button onClick="slideExamples.doElementByCN1();">Originally</button>
+
+var foo = document.createElement('div');
+foo.classList.add('slide');
+container.appendChild(foo);
+console.log('2.' + slides.length);<button onClick="slideExamples.doElementByCN2(); ">Adding One</button></pre>
+<ul><li>Live NodeList</li><li>Case-sensitive</li><li>Empty NodeList returns true</li></ul>
+<pre style="font-size:0.8rem" contenteditable>var emptyList = document.getElementsByClassName('zxcv');
+if(emptyList) {alert('returned true')};<button onClick="slideExamples.emptyList()">Test Me</button></pre>     </section>
+ </div>
+
+<div class="slide normal"><section class="content"> 
+     <h1 style="font-size: 1.8rem">getElementsByClassName(names)</h1>
+     
+     <blockquote><p>The <strong>getElementsByClassName(classNames)</strong> method takes a string that contains an unordered set of unique <strong>space-separated</strong> tokens representing classes. When called, the method must return a <strong><i class="textmask">live</i> NodeList</strong> object containing all the elements in the document, in <strong>tree order</strong>, that have all the classes specified in that argument, having obtained the classes by <strong>splitting a string on spaces</strong>. If there are no tokens specified in the argument, then the method must return an <strong>empty NodeList</strong>. If the document is in quirks mode, then the comparisons for the classes must be done in an ASCII case-insensitive manner, otherwise, the comparisons must be done in a <strong>case-sensitive</strong> manner.</p><cite> <a href="http://dev.w3.org/html5/spec-LC/dom.html#dom-document-getelementsbyclassname" target="_blank">-- Specification</a>.</cite>
+</blockquote></section>    
+ </div>
+ 
+ 
+ <!--<div class="slide normal"> 
+     <header><h1>getElementsByClassName</h1></header> 
+     <section class="content"> 
+     <pre contenteditable>d.getElementsByClassName('foo');
+     
+el   = document.getElementById('bar');
+EBCN = el.getElementsByClassName('foo');
+</pre>
+<p>returns a live NodeList</p>
+<p>Doesn't work in IE8 or earlier. Works in all other browsers</p>
+<p class="pop">Supported since IE9</p>
+</section>
+</div>-->
+ <div class="slide intro"> 
+     <header><h1>Selectors API</h1></header> 
+     
+<p class="pop">Supported since IE8</span></p>
+ </div> 
+ 
+ <div class="slide normal"> 
+<header><h1>Selectors API</h1></header> 
+<section class="content">
+<pre contenteditable>var chil = $('#bar .foo');</pre> 
+<p>Natively</p>
+<pre contenteditable>var el   = document.<strong>querySelector</strong>('#bar');
+
+var chil = el.<strong>querySelectorAll</strong>('.foo');</pre>
+<p>or</p>
+<pre contenteditable>chil = d.<strong>querySelectorAll</strong>('#bar .foo');</pre>
+</section>
+</div> 
+  
+<div class="slide normal"> 
+<header><h1>Selectors API</h1></header> 
+<section class="content">
+<p>Access DOM elements with standard CSS selectors.</p>
+<pre contenteditable>elem.querySelector(selector);
+elem.querySelectorAll(selector);</pre>
+<p>Examples</p>
+<pre contenteditable>d.querySelector('#id, li, #slides');
+d.querySelectorAll('li:nth-of-type(odd)');</pre>
+<p class="half">Spec: 
+<a href="http://www.w3.org/TR/selectors-api/">Selectors API level 1</a> | 
+<a href="http://www.w3.org/TR/selectors-api2/">Selectors API Level 2</a></p> 
+</section>
+</div> 
+ 
+<div class="slide normal"> 
+<header><h1>static nodeList</h1></header> 
+<section class="content"> 
+<pre contenteditable>QSA = d.querySelectorAll('#slides .slide')</pre>
+<p>if you increase # of slides, EBCN increases, QSA does not.</p>
+<pre contenteditable style="font-size:0.75rem">
+var EBCN = d.getElementsByClassName('slide');
+var QSA  = d.querySelectorAll('.slide');<button onClick="slideExamples.setUpQSA()">run</button></pre>
+<pre contenteditable style="font-size:0.75rem">
+var newSlide = d.createElement('div');
+newSlide.classList.add('slide');
+d.getElementById('slides').appendChild(newSlide);
+
+console.log('Current EBCN: ' + EBCN.length);
+console.log('Current QSA: ' + QSA.length);<button onClick="slideExamples.testQSA()">Test Me</button>
+</pre>
+</section>
+</div> 
+ 
+  
+ <div class="slide normal"> 
+<header><h1>No Native Iteration</h1></header> 
+<section class="content">
+<p>jQuery</p> 
+<pre contenteditable>
+$('#slides .slide').addClass('current');</pre>
+<p>Vanilla.js</p>
+<pre contenteditable>
+var slides = 
+   d.querySelectorAll('#slides .slide');
+
+for(var i=0; i &lt; slides.length; i++){
+   slides[i].classList.add('current');
+}</pre>
+
+</section>
+</div> 
+ 
+ 
+   
+<div class="slide intro"> 
+     <header><h1>classList</h1></header> 
+     <section>
+<p class="pop">No Internet Explorer love :(</span></p></section>  
+ </div> 
+  
+<div class="slide normal"> 
+<header><h1>classList</h1></header> 
+<section class="content"> 
+<pre contenteditable>
+<span style="font-size: 0.85rem;">$('#foo').</span><strong>addClass</strong>('bar');
+<span style="font-size: 0.85rem;">$('#foo').</span><strong>removeClass</strong>('bar');
+<span style="font-size: 0.85rem;">$('#foo').</span><strong>toggle</strong>('bar');
+<span style="font-size: 0.85rem;">$('#foo').</span><strong>hasClass</strong>('bar');</pre>
+ 
+<pre contenteditable style=" margin-right:-80px;">
+<span style="font-size: 0.85rem;">d.querySelector('#foo').</span><strong>classList.add</strong>('bar');
+<span style="font-size: 0.85rem;">d.querySelector('#foo').</span><strong>classList.remove</strong>('bar');
+<span style="font-size: 0.85rem;">d.querySelector('#foo').</span><strong>classList.toggle</strong>('bar');</pre>
+
+<pre contenteditable>
+fooCL = d.querySelector('#foo').</span><strong>classList</strong>;
+fooCL.<strong>add</strong>('bar');
+fooCL.<strong>remove</strong>('bar');
+fooCL.<strong>toggle</strong>('bar');
+fooCL.<strong>contains</strong>('bar'); // true or false</pre>
+</section>
+</div> 
+ 
+<div class="slide">
+<header><h1>classList</h1></header>
+<section class="content">
+        <pre contenteditable>
+<b>cl</b> = d.querySelector('#foo').<b>classList</b>;
+cl.<b>add</b>('zap');
+cl.<b>remove</b>('bar');
+cl.<b>toggle</b>('bar');
+cl.<b>contains</b>('bar')); // true or false
+var classes = el.toString();
+</pre>
+       <ul class="icons" style="clear: both;">
+         <li class="chrome">Chrome</li>
+         <li class="safari new">Safari 5.1</li>
+         <li class="firefox">Firefox </li>
+         <li class="opera">Opera</li>
+         <li class="ie bad">IE 10</li>
+         <li class="txt">mobile: Android 3, Opera 11.1</li>
+  </ul>
+      </section>
+  </div>  
+  
+   
+ <div class="slide normal"> 
+<header><h1>no native iterations</h1></header> 
+<section class="content">
+<p>jQuery</p> 
+<pre contenteditable>
+$('.foo').addClass('bar');</pre>
+
+<p>Native</p>
+<pre contenteditable>
+var foos = d.querySelectorAll('.foo');
+
+for(var i = 0; i < foos.length; i++){
+  foos[i].classList.add('bar');
+}</pre>
+
+</section>
+</div> 
+  
+<div class="slide intro"> 
+     <header><h1>data- &amp; dataset</h1></header>  
+     <section>
+<p class="pop">All Browsers love getAttribute()</span></p>
+<p class="pop">Dataset supported since IE10</span></p></section> 
+ </div> 
+
+<div class="slide normal"> 
+<header><h1>Issue solved? Attribute Abuse</h1></header> 
+<section class="content">
+<p>Attribute Abuse</p> 
+<pre contenteditable><strong>&lt;span </strong>
+  <strong>class</strong>="link externallink" 
+  <strong class="textmask">evt</strong>="5" 
+  <strong class="textmask">omnit</strong>="RFAW Review" 
+  <strong class="textmask">rel</strong>="www~trekaroo~com|activities|arizona-museum-of-natural-history-mesa-arizona" 
+  <strong class="textmask">target</strong>="_blank"&gt;
+  Trekaroo
+<strong>&lt;/span></strong>
+</pre>
+</section>
+</div> 
+
+ 
+<div class="slide normal"> 
+<header><h1>Author-defined attributes!</h1></header> 
+<section class="content">
+<p>Add attributes to elements in the form of <strong class="textmask">data-name</strong> and  access these through the DOM using <strong class="textmask">dataset[name]</strong> on the element in question.</p>
+<pre contenteditable>&lt;p <strong class="textmask">data-foo-bar="test"</strong>&gt;
+  <span data-foo-bar="test" id="dataset_01">That's an author defined attribute</span>
+&lt;/p></pre>
+<p><strong class="textmask">dataset</strong> property returns a <strong>DOMStringMap</strong> object of element's <strong>data-</strong> attributes</p>
+<pre contenteditable>el.<strong class="textmask">dataset</strong>[<strong class="textmask">'fooBar'</strong>]</pre>
+ </section>
+</div> 
+
+
+<div class="slide normal"> 
+<header><h1>data-* attributes</h1></header> 
+<section class="content"> 
+<p>Valid code</p>
+<pre contenteditable><strong>&lt;span </strong>
+  <strong>class</strong>="link"
+  <strong class="textmask">data-usage</strong>="externallink" 
+  <strong class="textmask">data-evt</strong>="5" 
+  <strong class="textmask">data-omnit</strong>="RFAW Review" 
+  <strong class="textmask">data-link</strong>="www.trekaroo.com/activities/arizona-museum-of-natural-history-mesa-arizona" 
+  <strong class="textmask">data-target</strong>="_blank"&gt;
+  Trekaroo
+<strong>&lt;/span></strong>
+</pre>
+</section>
+</div> 
+
+ 
+ <div class="slide normal"> 
+<header><h1>Example</h1></header> 
+<section class="content"> 
+<pre contenteditable style="">links=d.querySelectorAll('[<strong class="textmask">data-usage</strong>]');
+
+for (var i=0; i&lt;links.length; i++) {
+  switch(links[i].dataset.<strong class="textmask">dataUsage</strong>){
+    case "externallink":
+      uptake.createExternalLink(links[i]);
+      break;
+    case "internallink":
+      uptake.createInternalLink(links[i]);
+      break;
+    case "downloadlink":
+      uptake.createDownloadLink(links[i]);
+      break;
+  }
+}
+</pre>
+</section>
+</div>  
+  
+ <div class="slide normal"> 
+<header><h1>dataset</h1></header> 
+<section class="content">
+<p>dataset is a convenience feature for handling the data-* attributes, which are exposed as <strong class="textmask">camel-cased</strong> properties.</p>
+ <pre contenteditable>e.dataset.fooBar = 'test'
+e.dataset.usage = 'externallink' </pre>
+<p>sets the <strong class="textmask">data-foo-bar</strong> or <strong class="textmask">data-usage</strong> attribute on <strong class="textmask">e</strong>.</p>
+<pre contenteditable>d.body.dataset.aBC = 'frog';
+
+alert(d.body.getAttribute('data-a-b-c'));
+alert(d.body.dataset['aBC']);
+alert(d.body.dataset.aBC);<button onclick="slideExamples.bodyAttribute()" style="position:relative; top: -30px;">Test</button></pre>
+
+</section>
+</div> 
+ 
+ 
+
+ 
+  
+ 
+<div class="slide normal">
+      <header>
+         <h1>data-* attributes
+         </h1>
+      </header>
+      
+      <section class="content">
+        
+         <p class="notes">Define your own DOM manipulable data attributes</p>
+        <pre contenteditable>&lt;b class="card" <b>data-value</b>="10" 
+<b>data-suite</b>="3" <b>data-row</b>="3" <b>data-col</b>="2"&gt;&lt;/b&gt;</pre>
+        <pre contenteditable style="font-size: 0.9rem">var cards = document.querySelectorAll('.card'),
+            cardinfo;
+            deck=[];
+for(var i=0; i &lt; cards.length; i++){
+  cardinfo = [];
+  <strong class="textmask">for</strong> (var key <strong class="textmask">in</strong> cards[i].<b>dataset</b>) {
+    cardinfo.push(key,': ',cards[i].<b>dataset</b>[key],',');
+  }
+  var currentCard = cardinfo.join('');
+  deck.push(currentCard);
+}</pre>
+
+</section>
+</div> 
+ 
+<div class="slide normal"> 
+<header><h1>(cont...)</h1></header> 
+<section class="content"> 
+  
+
+        <pre contenteditable style="font-size: 0.95rem">currentCard == 'value: 10, suite: 3, row: 3, col: 2'</pre>
+        <pre contenteditable style="font-size: 0.95rem">var cardID = info.getAttribute('data-value'); //10</pre>
+        <p><small>All browsers support "data-*", but full support of 'dataset started with IE10, FF6, Safari 5.1, Chrome 7, Opera 11.1. Supported in iOS and Android. <a href="http://eligrey.com/blog/post/html-5-dataset-support">Polly fill</a> </small></p>
+      </section>
+  </div>
+  
+  
+<div class="slide normal"> 
+<header><h1>Notes on data- &amp; dataset</h1></header> 
+<section class="content">
+<ul>
+<li>Intended for site scripts, not publicly-usable metadata. </li>
+<li>data-name is case insensitive (html), as it converts to lowercase (xhtml)</li>
+<li>In JS, data-name is camelCased. Drop the "data-"</li>
+<li>All browsers can  use data-* attributes, accessing via <strong class="textmask">getAttribute</strong>. </li>
+<li>All browsers <strong class="textmask">EXCEPT IE</strong> support accessing values with <strong class="textmask">dataset</strong> property.</li>
+</ul>
+<p class="pop"><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/elements.html#dom-dataset">WHAT-WG Specification</a></p>
+</section>
+</div> 
+ 
+ 
+   
+<div class="slide normal"> 
+<header><h1>When it comes to mobile...</h1></header> 
+<section class="content">
+<ul>
+<li class="temphidden">99% of mobile visits support addEventListener</li>
+<li class="temphidden">Feature detection is the issue, not code parity</li>
+<li class="temphidden">Memory, latency, CPU usage are major concerns.</li>
+<li class="temphidden"><strong>Again</strong>: JS drains batteries!</li>
+<li class="temphidden">Weigh the pros and cons of including a library... may not be worth it.</li>
+</ul>
+</section>
+</div> 
+ 
+ 
+  
+<div class="slide normal"> 
+<header><h1>in General...</h1></header> 
+<section class="content">
+<ul><li class="temphidden">If you can do it in a few lines of code, don't import a library</li>
+<li class="temphidden">If you can make the home page work without requiring the library, do it! </li>
+<li class="temphidden">Don't import library as part of 3rd party widgets.</li>
+<li class="temphidden">Use libraries as tools, not as a crutch.</li>
+<li class="temphidden">Learn to code JavaScript not just jQuery.</li>
+<li class="temphidden">Remember mobile</li></ul>
+</section>
+</div> 
+ 
+  
+
+  
+  
+ 
+    <div class="slide normal"> 
+<header><h1>Thank You!</h1></header> 
+<section class="content"> 
+<h1 class="textmask">Estelle Weyl</h1>
+<h2><a href="http://www.standardista.com">www.standardista.com</a></h2>
+<h2><a href="http://www.twitter.com/estellevw">@estellevw</a></h2>
+<h2><a href="http://www.twitter.com/standardista">@standardista</a></h2>
+<div style="float:right"><img src="http://akamaicovers.oreilly.com/images/9780980846904/cat.gif" alt="HTML5 and CSS3 for the Real World"><img src="http://akamaicovers.oreilly.com/images/0636920018063/cat.gif" alt="HTML5: The Definitive Guide" style="margin: 0 20px;"/><img src="http://akamaicovers.oreilly.com/images/0636920021711/cat.gif" alt="MObile HTML5" style="margin: 0 20px;"/><img src="http://akamaicovers.oreilly.com/images/0636920025955/cat.gif" alt="Web Performance Daybook"/></div>
+</section>
+</div> 
+ 
+   
+
+   </div>
+   
+
+</div>
+<script src="fluentconf.js"></script>
+  <!--[if lt IE 9]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({ mode: "overlay" });</script>
+  <![endif]--> 
+<script>
+var slideExamples = {
+	doElementByCN1: function(){
+		slideExamples.container = document.getElementById('slides');
+		slideExamples.slides = slideExamples.container.getElementsByClassName('slide');
+		alert('1. slides.length: ' + slideExamples.slides.length);
+	},
+	doElementByCN2: function(){
+		var foo = document.createElement('div');
+		foo.classList.add('slide');
+		slideExamples.container.appendChild(foo);
+		alert('2. slides.length: ' + slideExamples.slides.length);
+	},
+	emptyList: function(){
+		var emptyList = document.getElementsByClassName('zxcv');
+		if(emptyList) {alert('returned true')};	
+	},
+	setUpQSA: function(){
+		slideExamples.EBCN = document.getElementsByClassName('slide');
+		slideExamples.QSA = document.querySelectorAll('#slides .slide');
+		alert('Original byClassName: ' + slideExamples.EBCN.length + '\n\nOriginal SelectorAll: ' + slideExamples.QSA.length);	
+	},
+	testQSA: function(){
+		var newSlide = document.createElement('div');
+		newSlide.classList.add('slide');
+		document.getElementById('slides').appendChild(newSlide);
+
+alert('Current byClassName: ' + slideExamples.EBCN.length + '\n\nCurrent SelectorAll: ' + slideExamples.QSA.length);
+	},
+	bodyAttribute: function(){
+		document.body.dataset.aBC = 'frog';
+	    alert("getAttribute('data-a-b-c'): " + document.body.getAttribute('data-a-b-c') + 
+			"\n\ndataset['aBC']: " + document.body.dataset['aBC'] + 
+			"\n\ndataset.aBC: " + document.body.dataset.aBC);	
+	}
+ }</script>
+ 
+ <script>
+var links=document.querySelectorAll('[data-usage]');
+
+for (var i=0; i<links.length; i++) {
+  switch(links[i].dataset.dataUsage){
+    case "externallink":
+      uptake.createExternalLink(links[i]);
+      break;
+    case "internallink":
+      uptake.createInternalLink(links[i]);
+      break;
+    case "downloadlink":
+      uptake.createDownloadLink(links[i]);
+      break;
+  }
+}
+ </script>
+  </body> 
+
+</html>
+
