@@ -55,20 +55,26 @@ a {color: #900;}
 	top: 0px;
 	display: block;
 	overflow: hidden;
-	background: #000;
+	background: indianred;
 	background-image: 
 		-webkit-linear-gradient(left, rgba(0,0,0,0.2) 50%, transparent 50%),
-		-webkit-linear-gradient(left, transparent 40%, rgba(0,0,0,0.2) 40%),
+		-webkit-linear-gradient(left, transparent 40%, rgba(0,0,0,0.1) 40%),
 		-webkit-linear-gradient(left, transparent 60%, rgba(0,0,0,0.2) 60%),
+		-webkit-linear-gradient(left, transparent 50%, rgba(0,0,0,0.3) 50%),
+		-webkit-linear-gradient(left, transparent 40%, rgba(0,0,0,0.1) 40%),
 		-webkit-linear-gradient(left, transparent 50%, rgba(0,0,0,0.2) 50%),
-		-webkit-linear-gradient(left, transparent 40%, rgba(0,0,0,0.2) 40%),
-		-webkit-linear-gradient(left, transparent 60%, rgba(0,0,0,0.2) 60%),
-		-webkit-linear-gradient(left, transparent 50%, rgba(0,0,0,0.2) 50%),
-		-webkit-linear-gradient(left, transparent 40%, rgba(0,0,0,0.2) 40%),
-		-webkit-linear-gradient(left, transparent 60%, rgba(0,0,0,0.2) 60%),
-		-webkit-linear-gradient(left,
-		red 14%, orange 15%, orange 28%, yellow 29%, yellow 42%, green 43%, green 56%, blue 57%, blue 70%, magenta 71%, magenta 85%, purple 86%);
-	-webkit-background-size: 1px 50%, 1px 50px, 32px, 120px, 80px, 60px, 90px, 110px, 70px, 500px;
+		-webkit-linear-gradient(left, transparent 40%, rgba(0,0,0,0.3) 40%),
+		-webkit-linear-gradient(left, transparent 60%, rgba(0,0,0,0.1) 60%);
+	background-image: 
+		-webkit-linear-gradient(to right, rgba(0,0,0,0.2) 50%, transparent 50%),
+		-webkit-linear-gradient(to right, transparent 40%, rgba(0,0,0,0.1) 40%),
+		-webkit-linear-gradient(to right, transparent 60%, rgba(0,0,0,0.2) 60%),
+		-webkit-linear-gradient(to right, transparent 50%, rgba(0,0,0,0.3) 50%),
+		-webkit-linear-gradient(to right, transparent 40%, rgba(0,0,0,0.1) 40%),
+		-webkit-linear-gradient(to right, transparent 50%, rgba(0,0,0,0.2) 50%),
+		-webkit-linear-gradient(to right, transparent 40%, rgba(0,0,0,0.3) 40%),
+		-webkit-linear-gradient(to right, transparent 60%, rgba(0,0,0,0.1) 60%);
+	background-size: 1px 50px, 32px, 120px, 80px, 60px, 90px, 110px, 70px;
 }
 .slides {
 	padding-top: 10px;
@@ -273,7 +279,7 @@ footer {
 	margin: 20px 0 0 30px;
 }
 a {
-	color: #900;
+	color: indianred;
 	display: inline-block;
 	text-decoration: none;
 	line-height: 110%;
