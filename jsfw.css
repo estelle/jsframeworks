@@ -441,7 +441,7 @@ pre em {
 		}
 		.icons .txt {background-image: none; width: auto; font-size: 18px;}
 
-.pop {background-color: #fff; display: inline-block; box-shadow:0 0 0 5px #900, 0 0 0 7px #090; margin-left: 10px; border-radius: 3em;padding: 3px 10px;}
+.pop {background-color: #fff; display: inline-block; box-shadow:0 0 0 5px indianred, 0 0 0 7px goldenrod; margin-left: 10px; border-radius: 3em;padding: 3px 10px;}
 
 @media print {
 	.slide {

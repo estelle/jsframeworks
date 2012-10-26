@@ -25,18 +25,9 @@ color: rgba(0,0,0,0);
 	
 .invert h1{
 
-    background: 
-        -webkit-linear-gradient(left, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 50%),
-        -webkit-linear-gradient(left, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 40%),
-        -webkit-linear-gradient(left, rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 60%),
-        -webkit-linear-gradient(left, rgba(255,255,255,0) 50%, rgba(255,255,255,0.2) 50%),
-        -webkit-linear-gradient(left, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 40%),
-        -webkit-linear-gradient(left, rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 60%)
-        blue;
-    -webkit-background-size: 1px 50%, 1px 50px, 32px, 120px, 80px, 70px;
-    
--webkit-background-clip: text,text,text,text,text,text,text, border;
-color: rgba(0,0,0,0);
+    background: none;
+    color: indianred;
+    -webkit-background-clip: none;
     }
 
 .normal h1.textmask {
@@ -383,7 +374,6 @@ from: ajax.googleapis.com/ajax/libs/jquery/1.7.2<br/>
     <li>Ensure a responsive UI</li>
 </ul> 
 <img src="../mobile/images/latency.gif" alt="Latency"/>
-<a href="http://estelle.github.com/mobile/" style="float: right">Mobile Performance presentation</a>
 </section>
  </div>  
 
@@ -395,14 +385,25 @@ from: ajax.googleapis.com/ajax/libs/jquery/1.7.2<br/>
      <a href="http://www2012.org/proceedings/proceedings/p41.pdf" class="objectlink">Download PDF</a>
  </div>
 
+<div class="slide normal">
+      <header><h1>Digressing...</h1></header>
+      <section class="content">
+        <h1>Mobile Performance Considerations</h1>
+          <ul>
+            <li>Battery Life</li>
+            <li>Latency</li>
+<li>Memory</li>
+<li>UI responsiveness</li>
+          </ul>
+          <a href="http://estelle.github.com/mobile/" style="float: right">Mobile Performance presentation</a>
+      </section>
+</div>
 <div class="slide normal"> 
-     <header><h1>Don't be a SPOF</h1></header> 
+     <header><h1>3rd Party Widgets</h1></header> 
      <section class="content"> 
-     <h1>Single Point of Failure</h1>
-     
-     <p>Don't Add Frameworks in the 3rd party widgets you create!!</p>
-     
-     <p>"<a href="https://github.com/kentbrew/Case-Hardened-JavaScript/blob/master/stub.js">Eight Simple Rules for Running Your JavaScript on My Page</a>" by Kent Brewster</p>
+     <p>Don't include a SPOF (Single Point of Failure)</p>
+     <p>Don't cause a SPOF</p>
+     <p>Never Add Frameworks in 3rd party widgets you create!!</p>
      </section>
  </div>
 
@@ -563,28 +564,21 @@ nav li<strong>:hover</strong> ul {
   position:relative;
 }
 nav ul ul {
-  -webkit-transform: scale(1,0); 
-  -moz-transform: scale(1,0); 
-  -ms-transform: scale(1,0); 
-  -o-transform: scale(1,0); 
-  transform: scale(1,0); 
+  -webkit-transform: scale(1,0); // all
+  -ms-transform: scale(1,0);  // IE9
+  -o-transform: scale(1,0);  // 12-
+  transform: scale(1,0); // FF16, IE10, O-12.1
   -webkit-transform-origin: top center;
-  -moz-transform-origin: top center;
   -ms-transform-origin: top center;
-  -o-transform-origin: top center;
   transform-origin: top center; 
   -webkit-transition: transform 0.2s linear 50ms; 
-  -moz-transition: transform 0.2s linear 50ms; 
-  -ms-transition: transform 0.2s linear 50ms; 
   -o-transition: transform 0.2s linear 50ms; 
-  transition: transform 0.2s linear 50ms; 
+  transition: transform 0.2s linear 50ms; // IE10, FF16 O12.1
   position: absolute; top: 100%;
   display: none;
 }
-</pre>
-<pre style="position: absolute; top:1px;right:21px;font-size:0.8rem; border:none; border-left: 1px solid #ccc; border-top-left-radius:0; border-bottom-left-radius:0;">nav li:hover ul {
+nav li:hover ul {
   -webkit-transform: scale(1,1);
-  -moz-transform: scale(1,1);
   -ms-transform: scale(1,1);
   -o-transform: scale(1,1);
   transform: scale(1,1);
@@ -627,7 +621,7 @@ el.getElementsByClassName('foo');
  
  
 <div class="slide normal"> 
-     <header><h1>Live NodeList</h1></header> 
+     <header><h1>Returns a Live Node List</h1></header> 
      <section class="content" style="margin-top: -20px;"> 
 <p class="half">Try the following code in the console</p>   
 <pre style="font-size:0.8rem" contenteditable>
@@ -640,8 +634,8 @@ foo.classList.add('slide');
 container.appendChild(foo);
 console.log('2.' + slides.length);<button onClick="slideExamples.doElementByCN2(); ">Adding One</button></pre>
 <ul><li>Live NodeList</li><li>Case-sensitive</li><li>Empty NodeList returns true</li></ul>
-<pre style="font-size:0.8rem" contenteditable>var emptyList = document.getElementsByClassName('zxcv');
-if(emptyList) {alert('returned true')};<button onClick="slideExamples.emptyList()">Test Me</button></pre>     </section>
+<pre style="font-size:0.8rem" contenteditable>var emptyList = document.getElementsByClassName('not_found');
+if(emptyList) {alert('returned empty node list')};<button onClick="slideExamples.emptyList()">Test Me</button></pre>     </section>
  </div>
 
 <div class="slide normal"><section class="content"> 
@@ -1029,8 +1023,8 @@ var slideExamples = {
 		alert('2. slides.length: ' + slideExamples.slides.length);
 	},
 	emptyList: function(){
-		var emptyList = document.getElementsByClassName('zxcv');
-		if(emptyList) {alert('returned true')};	
+		var emptyList = document.getElementsByClassName('not_found');
+		if(emptyList) {alert('returned empty node list')};	
 	},
 	setUpQSA: function(){
 		slideExamples.EBCN = document.getElementsByClassName('slide');
