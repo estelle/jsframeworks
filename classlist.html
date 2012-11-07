@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Classlist</title>
+</head>
+<body>
+​<div id="foo" class="bar">hi</div>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+
+<script>
+var el = document.querySelector('#foo');
+zap = function(){  
+	console.log(el.innerHTML);  
+	   el.classList.add('zap');
+	    el.classList.remove('bar');
+	    el.classList.toggle('bar');
+	    el.classList.toggle('bar');
+	    var answer = el.classList.contains('bar'); // true or false
+	    var classes = el.classList.toString();
+	    console.log(answer);
+	    console.log(classes);
+	    
+	};
+
+el.addEventListener("click", zap, false);
+</script>
+</body>
+</html>
